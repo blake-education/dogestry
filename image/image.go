@@ -1,14 +1,18 @@
 package image
 
+import (
+	"github.com/blake-education/dogestry/remote"
+	"github.com/blake-education/dogestry/repository"
+)
+
 type Image struct {
-	OriginalName string
-	ID           string
-	localRoot    string
 }
 
-func NewImage(name, workRoot string) *Image {
-	return &Image{
-		OriginalName: name,
-		localRoot:    workRoot,
-	}
+func (i *Image) NeedsPushToRemote(remote remote.Remote) (bool, error) {
+}
+
+func (i *Image) NeedsPullFromRemote(remote remote.Remote) (bool, error) {
+}
+
+func (i *Image) ImportRepository(repo *repository.Repository) error {
 }
