@@ -30,3 +30,28 @@ func Pull(image *image.Image, remote remote.Remote, repo *repository.Repository)
 
 	return nil
 }
+
+
+
+	fmt.Println("resolving image id")
+	id, err := r.ResolveImageNameToId(image)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("image '%s' resolved on remote id '%s'\n", image, id.Short())
+
+	fmt.Println("preparing images")
+	if err := cli.preparePullImage(id, imageRoot, r); err != nil {
+		return err
+	}
+
+	fmt.Println("preparing repositories file")
+	if err := prepareRepositories(image, imageRoot, r); err != nil {
+		return err
+	}
+
+	fmt.Println("sending tar to docker")
+	if err := cli.sendTar(imageRoot); err != nil {
+		return err
+	}
